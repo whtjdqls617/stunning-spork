@@ -35,7 +35,7 @@ extension CitiesWeatherController: UITableViewDataSource {
     
     func changeCityNameToKr (_ cityName : String) -> String {
         let index = weatherManager.citiesNameForCell.firstIndex(of: cityName)
-        return (weatherManager.citiesKrName[index!])
+        return (weatherManager.citiesKrName[index ?? 0])
     }
     
     func makeURL(_ cityName : String) -> String {
@@ -85,7 +85,7 @@ extension CitiesWeatherController: UITableViewDelegate {
         guard let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "detailCityViewController") as? DetailCityViewController else {return}
         let data = findCityData(weatherManager.citiesNameForCell[indexPath.row])
         nextVC.cityData = data
-        nextVC.cityNameKr = changeCityNameToKr(data!.cityName)
+        nextVC.cityNameKr = changeCityNameToKr(data?.cityName ?? "")
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }

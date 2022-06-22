@@ -9,7 +9,6 @@ import UIKit
 
 class DetailCityViewController: UIViewController {
     
-    @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherDescriptionLabel: UILabel!
     @IBOutlet weak var minTempLabel: UILabel!
@@ -34,16 +33,20 @@ class DetailCityViewController: UIViewController {
     }
     
     func initView() {
-//        cityNameLabel.text = cityNameKr
-        weatherImageView.image = weatherManager.imageLoader(cityData!)
-        weatherDescriptionLabel.text = cityData?.descriptionKr
-        minTempLabel.text = String(format: "%.1f", cityData?.minTemp ?? 0.0)
-        currentTempLabel.text = String(format: "%.1f", cityData?.currentTemp ?? 0.0)
-        maxTempLabel.text = String(format: "%.1f", cityData?.maxTemp ?? 0.0)
-        sensibleTempLabel.text = String(format: "%.1f", cityData?.sensibleTemp ?? 0.0)
-        humidityLabel.text = "\(String(cityData?.humidity ?? 0))%"
-        windSpeedLabel.text = "\(String(format: "%.1f", cityData?.windSpeed ?? 0.0))ms"
-        atmPressureLabel.text = "\(String(cityData?.atmPressure ?? 0))apm"
+        if let cityData = cityData {
+            weatherImageView.image = weatherManager.imageLoader(cityData)
+            weatherDescriptionLabel.text = cityData.descriptionKr
+            minTempLabel.text = String(format: "%.1f", cityData.minTemp)
+            currentTempLabel.text = String(format: "%.1f", cityData.currentTemp)
+            maxTempLabel.text = String(format: "%.1f", cityData.maxTemp)
+            sensibleTempLabel.text = String(format: "%.1f", cityData.sensibleTemp)
+            humidityLabel.text = "\(String(cityData.humidity))%"
+            windSpeedLabel.text = "\(String(format: "%.1f", cityData.windSpeed))ms"
+            atmPressureLabel.text = "\(String(cityData.atmPressure))apm"
+        } else {
+            print("ㅗaven't received the data yet")
+            return
+        }
         
     }
 }
